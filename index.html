@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dyrection</title>
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+  <link rel="stylesheet" href="css/app.css">
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+</head>
+<body>
+  <aside id="panel">
+    <header class="brand">
+      <h1>Dyrection</h1>
+      <p>Simple black &amp; white direction maps</p>
+    </header>
+
+    <section>
+      <form id="search-form" autocomplete="off">
+        <input id="search" type="search" placeholder="Search a place or address…" aria-label="Search">
+      </form>
+      <ul id="search-results" class="results" hidden></ul>
+    </section>
+
+    <section>
+      <div class="modes" role="radiogroup" aria-label="Tool">
+        <button class="mode" data-mode="labels" aria-pressed="true">Labels</button>
+        <button class="mode" data-mode="pin" aria-pressed="false">Add pin</button>
+        <button class="mode" data-mode="route" aria-pressed="false">Draw route</button>
+      </div>
+      <p id="mode-hint" class="hint"></p>
+    </section>
+
+    <section>
+      <h2>Title</h2>
+      <input id="title" type="text" placeholder="e.g. Grand Rapids Half Marathon">
+      <input id="subtitle" type="text" placeholder="Subtitle (optional)">
+    </section>
+
+    <section>
+      <div class="section-head"><h2>Pins</h2></div>
+      <ul id="pin-list" class="items"></ul>
+      <p class="empty" data-empty-for="pin-list">No pins yet — pick <b>Add pin</b> and click the map.</p>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>Routes</h2>
+        <button id="new-route" class="link">+ New route</button>
+      </div>
+      <ul id="route-list" class="items"></ul>
+      <p class="empty" data-empty-for="route-list">No routes yet — pick <b>Draw route</b> and click along the way.</p>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>Road labels</h2>
+        <button id="reset-labels" class="link">Reset</button>
+      </div>
+      <label class="check"><input type="checkbox" data-opt="secondaryLabels"> Always label secondary roads</label>
+      <ul id="label-list" class="chips"></ul>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>Road colors</h2>
+        <button id="reset-colors" class="link">Reset</button>
+      </div>
+      <div class="colors">
+        <label class="color"><input type="color" data-color-key="motorway"> Highways</label>
+        <label class="color"><input type="color" data-color-key="major"> Main roads</label>
+        <label class="color"><input type="color" data-color-key="secondary"> Secondary roads</label>
+        <label class="color"><input type="color" data-color-key="minor"> Side streets</label>
+      </div>
+    </section>
+
+    <section>
+      <h2>Map</h2>
+      <div class="checks">
+        <label class="check"><input type="checkbox" data-opt="shields"> Highway shields</label>
+        <label class="check"><input type="checkbox" data-opt="places"> Place names</label>
+        <label class="check"><input type="checkbox" data-opt="water"> Water</label>
+        <label class="check"><input type="checkbox" data-opt="waterLabels"> Water names</label>
+        <label class="check"><input type="checkbox" data-opt="parks"> Parks</label>
+        <label class="check"><input type="checkbox" data-opt="buildings"> Buildings</label>
+        <label class="check"><input type="checkbox" data-opt="rail"> Railways</label>
+        <label class="check"><input type="checkbox" data-opt="minor"> Side streets</label>
+        <label class="check"><input type="checkbox" data-opt="paths"> Paths &amp; trails</label>
+      </div>
+      <div class="row">
+        <span class="row-label">Pin &amp; route color</span>
+        <div id="accents" class="swatches"></div>
+      </div>
+      <div class="row">
+        <label class="row-label" for="frame">Frame</label>
+        <select id="frame">
+          <option value="fit">Fill window</option>
+          <option value="letter-l">Letter, landscape</option>
+          <option value="letter-p">Letter, portrait</option>
+          <option value="square">Square</option>
+          <option value="wide">16 : 9</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="actions">
+      <div class="row">
+        <button id="export" class="primary">Download PNG</button>
+        <select id="export-scale" aria-label="Export resolution">
+          <option value="2">2×</option>
+          <option value="3" selected>3× (print)</option>
+          <option value="4">4×</option>
+        </select>
+      </div>
+      <div class="row">
+        <button id="save-project">Save project</button>
+        <button id="open-project">Open project</button>
+        <input id="project-file" type="file" accept=".json,application/json" hidden>
+      </div>
+      <button id="clear-all" class="link danger">Start over</button>
+    </section>
+  </aside>
+
+  <main id="stage">
+    <div id="frame-box">
+      <div id="titlebar" hidden>
+        <div id="titlebar-title"></div>
+        <div id="titlebar-subtitle"></div>
+      </div>
+      <div id="map"></div>
+    </div>
+    <div id="tooltip" hidden></div>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
